@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "189811745297",
+    "firebase_url": "https://cbaapp-ce649.firebaseio.com",
+    "project_id": "cbaapp-ce649",
+    "storage_bucket": "cbaapp-ce649.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:189811745297:android:864738403f2d8768",
+        "android_client_info": {
+          "package_name": "josenavarro.cbaapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "189811745297-f0i1dmclfhlp9l4tpgo9h7v6g10d9qol.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "josenavarro.cbaapp",
+            "certificate_hash": "94B93C4933FF68B33CFE8614CB03E474A85026F2"
+          }
+        },
+        {
+          "client_id": "189811745297-u6he9q11d2ll3knvoc4q6rf13tne9mn9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAxsTnmmvXgKeI8VYml3gPSpAo_OwZNd2U"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "189811745297-u6he9q11d2ll3knvoc4q6rf13tne9mn9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
