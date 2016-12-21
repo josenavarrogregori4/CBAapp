@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.ListAdapter;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -55,7 +54,6 @@ public class AdaptadorEquipos extends BaseAdapter {
         //Rellenar datos de los componentes
         textoNombreEquipo.setText(arrayEquipos.get(i).getNombre());
         Picasso.with(contexto).load(arrayEquipos.get(i).getImagen()).into(imagenEquipo);
-
 
         return rowView;
     }

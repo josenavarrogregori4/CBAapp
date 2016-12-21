@@ -13,11 +13,5 @@
     tools:context="josenavarro.cbaapp.ListaEquipos"
     tools:showIn="@layout/activity_lista_equipos">
 
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/list_view_equipos"
-        >
 
-    </ListView>
 </RelativeLayout>

@@ -1,60 +1,40 @@
 package josenavarro.cbaapp;
 
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.widget.ListView;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import josenavarro.cbaapp.fragments.ListaEquiposFragment;
+import josenavarro.cbaapp.fragments.ListaPartidosEquipoFragment;
 
-import java.util.ArrayList;
-
-import josenavarro.cbaapp.adaptadores.AdaptadorEquipos;
-import josenavarro.cbaapp.modelos.Equipo;
-
-public class ListaEquipos extends AppCompatActivity {
-    private DatabaseReference referenciaBaseDatos;
-    private FirebaseDatabase baseDatos;
-    private ArrayList<Equipo> arrayEquipos;
+public class ListaEquipos extends AppCompatActivity implements ListaEquiposFragment.OnFragmentInteractionListener, ListaPartidosEquipoFragment.OnFragmentInteractionListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_equipos);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
         setSupportActionBar(toolbar);
 
+        /*
+         Activar el boton "UP"
+         getActionBar() devuelve NullPointerException, según stackoverflow es porque el tema no lo soporta
+         */
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        final ListView listViewEquipos = (ListView) findViewById(R.id.list_view_equipos);
+        //Se añade el fragment que lista los equipos
 
-        //Base de datos
-        baseDatos = FirebaseDatabase.getInstance();
-        referenciaBaseDatos = baseDatos.getReference("Equipos");
-
-        //Inicialización arrayEquipos
-        arrayEquipos = new ArrayList<Equipo>();
-
-        //Evento para obtención de los datos de equipos
-        referenciaBaseDatos.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for(DataSnapshot equipos : dataSnapshot.getChildren()){
-                    Equipo e = equipos.getValue(Equipo.class);
-                    e.setId(equipos.getKey());
-                    arrayEquipos.add(e);
-                }
-                listViewEquipos.setAdapter(new AdaptadorEquipos(getApplicationContext(), arrayEquipos));
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+        Fragment listaEquiposFragment = new ListaEquiposFragment();
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.add(R.id.frame_layout_equipos, listaEquiposFragment).commit();
     }
 
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
+    }
 }

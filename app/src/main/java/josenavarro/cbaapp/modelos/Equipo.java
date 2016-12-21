@@ -1,9 +1,11 @@
 package josenavarro.cbaapp.modelos;
 
+import java.io.Serializable;
+
 /**
  * Created by José on 20/12/2016.
  */
-public class Equipo {
+public class Equipo implements Serializable{
     private String id;
     private String nombre;
     private String imagen;
