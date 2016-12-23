@@ -8,7 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
@@ -45,15 +45,22 @@ public class AdaptadorEquipos extends BaseAdapter {
     }
 
     @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
+    public View getView(final int i, View view, ViewGroup viewGroup) {
         View rowView = inflater.inflate(R.layout.item_listview_equipos, viewGroup, false);
         //Componentes de cada item de la lista de equipos
         TextView textoNombreEquipo = (TextView) rowView.findViewById(R.id.nombreEquipo);
-        ImageView imagenEquipo = (ImageView) rowView.findViewById(R.id.imagenEquipo);
+        final ImageView imagenEquipo = (ImageView) rowView.findViewById(R.id.imagenEquipo);
+        final ImageView imagenEquipoDesenfocada = (ImageView) rowView.findViewById(R.id.imagenEquipoDesenfocada);
 
         //Rellenar datos de los componentes
         textoNombreEquipo.setText(arrayEquipos.get(i).getNombre());
-        Picasso.with(contexto).load(arrayEquipos.get(i).getImagen()).into(imagenEquipo);
+
+        //API que de una URL saca la imagen, siempre busca la imagen
+        //Picasso.with(contexto).load(arrayEquipos.get(i).getImagen()).networkPolicy(NetworkPolicy.OFFLINE).into(imagenEquipo);
+        //Picasso.with(contexto).load(arrayEquipos.get(i).getImagen()).transform(new BlurTransformation(contexto, 30, 1)).networkPolicy(NetworkPolicy.OFFLINE).into(imagenEquipoDesenfocada);
+
+        Glide.with(contexto).load(arrayEquipos.get(i).getImagen()).skipMemoryCache(false).into(imagenEquipo);
+        Glide.with(contexto).load(arrayEquipos.get(i).getImagen()).skipMemoryCache(false).bitmapTransform(new jp.wasabeef.glide.transformations.BlurTransformation(contexto, 30, 1)).into(imagenEquipoDesenfocada);
 
         return rowView;
     }

@@ -1,4 +1,4 @@
-package josenavarro.cbaapp;
+package josenavarro.cbaapp.activities;
 
 import android.net.Uri;
 import android.os.Bundle;
@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
+import josenavarro.cbaapp.R;
 import josenavarro.cbaapp.fragments.ListaEquiposFragment;
 import josenavarro.cbaapp.fragments.ListaPartidosEquipoFragment;
 
