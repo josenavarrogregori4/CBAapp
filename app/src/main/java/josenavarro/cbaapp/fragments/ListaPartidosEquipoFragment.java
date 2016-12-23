@@ -4,50 +4,53 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ExpandableListView;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 import josenavarro.cbaapp.R;
+import josenavarro.cbaapp.adaptadores.AdaptadorPartidos;
+import josenavarro.cbaapp.modelos.Equipo;
+import josenavarro.cbaapp.modelos.Partido;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link ListaPartidosEquipoFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link ListaPartidosEquipoFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class ListaPartidosEquipoFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private Equipo equipoSeleccionado;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private View view;
+    private ExpandableListView expListView;
+
 
     private OnFragmentInteractionListener mListener;
+
+    private static final String NOMBREARGUMENTO = "equipo";
+
+    private FirebaseDatabase baseDatos;
+    private DatabaseReference referenciaBaseDatos;
+    private ArrayList<Partido> arrayPartidos;
 
     public ListaPartidosEquipoFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ListaPartidosEquipoFragment.
-     */
+    //Si se le quiere pasar algo al crear el fragment usamos el siguiente constructor
     // TODO: Rename and change types and number of parameters
-    public static ListaPartidosEquipoFragment newInstance(String param1, String param2) {
+    public static ListaPartidosEquipoFragment newInstance(Equipo e) {
         ListaPartidosEquipoFragment fragment = new ListaPartidosEquipoFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+
+        args.putSerializable(NOMBREARGUMENTO, e);
+
         fragment.setArguments(args);
         return fragment;
     }
@@ -55,13 +58,62 @@ public class ListaPartidosEquipoFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if(getArguments() != null){
+            equipoSeleccionado = (Equipo) getArguments().getSerializable(NOMBREARGUMENTO);
+        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_lista_partidos_equipo, container, false);
+        view = inflater.inflate(R.layout.fragment_lista_partidos_equipo, container, false);
+
+        //Se recoge la instancia de la lista expandible
+        expListView = (ExpandableListView) view.findViewById(R.id.lista_partidos_equipo);
+
+        //Base de datos
+        baseDatos = FirebaseDatabase.getInstance();
+        referenciaBaseDatos = baseDatos.getReference("Partidos/"+equipoSeleccionado.getId());
+
+        //Inicialización arrayPartido
+        arrayPartidos = new ArrayList<Partido>();
+
+        //Evento para obtención de los datos de partidos
+        referenciaBaseDatos.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                //Se limpia el arrayPartidos antes de recoger los datos de la base de datos
+                arrayPartidos.clear();
+                for(DataSnapshot partidos : dataSnapshot.getChildren()){
+                    Partido p = partidos.getValue(Partido.class);
+                    p.setId(partidos.getKey());
+                    arrayPartidos.add(p);
+                }
+                expListView.setAdapter(new AdaptadorPartidos(getActivity().getApplicationContext(), arrayPartidos, equipoSeleccionado));
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        //Evento para que cada item de la ListView llame a un nuevo fragment
+        expListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                //CONTINUAR
+            }
+        });
+
+        return view;
+    }
+
+    public void goToFragment(Fragment f) {
+        FragmentManager fragmentManager = getFragmentManager();
+        //fragmentManager.beginTransaction().replace(R.id.frame_layout_equipos, f).addToBackStack(null).commit();
     }
 
     // TODO: Rename method, update argument and hook method into UI event

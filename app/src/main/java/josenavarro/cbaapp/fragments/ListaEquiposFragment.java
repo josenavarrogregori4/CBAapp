@@ -45,7 +45,7 @@ public class ListaEquiposFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_lista_equipos, container, false);
-
+        //Se obtiene la instancia de la lista
         final ListView listViewEquipos = (ListView) view.findViewById(R.id.list_view_equipos);
 
         //Base de datos
@@ -83,12 +83,8 @@ public class ListaEquiposFragment extends Fragment {
                 Se crea un nuevo fragment para listar los resultados
                 Tambien se crea un Bundle para pasarle al fragment el equipo seleccionado
                  */
-                Fragment fragmentListaPartidos = new ListaPartidosEquipoFragment();
                 Equipo e = arrayEquipos.get(i);
-
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("equipo", e);
-                fragmentListaPartidos.setArguments(bundle);
+                Fragment fragmentListaPartidos = ListaPartidosEquipoFragment.newInstance(e);
 
                 goToFragment(fragmentListaPartidos);
             }

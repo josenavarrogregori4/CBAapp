@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="250dp"
+    android:background="@color/colorItemExtensibleList"
+    >
+
+    <LinearLayout
+        android:layout_width="190dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_alignParentLeft="true"
+        android:id="@+id/layout_parte_local"
+        android:layout_marginTop="10dp"
+        >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:id="@+id/nombreEquipoLocal"
+            android:text="Equipo Local"
+            style="@style/estiloTextoItemPartido"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/resultadoEquipoLocal"
+            android:text="000"
+            android:textSize="25dp"
+            android:gravity="center_horizontal"
+            android:layout_marginBottom="5dp"
+            />
+
+        </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="190dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="10dp"
+        >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:id="@+id/nombreEquipoVisitante"
+            android:text="Equipo Visitante"
+            style="@style/estiloTextoItemPartido"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/resultadoVisitante"
+            android:text="000"
+            android:textSize="25dp"
+            android:gravity="center_horizontal"
+            android:layout_marginBottom="5dp"
+            />
+    </LinearLayout>
+</RelativeLayout>
